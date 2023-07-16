@@ -41,6 +41,9 @@ export const getStaticProps: GetStaticProps<RandomQuoteProps> = async () => {
 
 export default function RandomQuote({ quote, generatedAt }: RandomQuoteProps) {
   console.log("quote :>> ", quote);
+  const reloadPage = () => {
+    window.location.reload();
+  };
   return (
     <>
       <Head>
@@ -55,7 +58,9 @@ export default function RandomQuote({ quote, generatedAt }: RandomQuoteProps) {
           Generated at <span className="date">{generatedAt}</span>
         </div>
 
-        <button className={style.refresh}>Refresh to get a new one</button>
+        <button className={style.refresh} onClick={reloadPage}>
+          Refresh to get a new one
+        </button>
       </div>
     </>
   );
