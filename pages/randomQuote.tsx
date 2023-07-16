@@ -50,7 +50,7 @@ export default function RandomQuote({ quote, generatedAt }: RandomQuoteProps) {
         <title key="title">SSG - random quote</title>
       </Head>
       <div className={style.container}>
-        <h2 className={style.title}>Random Quote of the day</h2>
+        <h2 className={style.title}>Get a new Quote every 5 minutes</h2>
 
         <text className={style.quote}>{quote[0].content}</text>
         <text className={style.author}> From: {quote[0].author}</text>
