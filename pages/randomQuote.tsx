@@ -16,7 +16,7 @@ export interface QuoteType {
 
 interface RandomQuoteProps {
   quote: QuoteType[];
-  generatedAtt: string;
+  generatedAt: string;
 }
 
 export const getStaticProps: GetStaticProps<RandomQuoteProps> = async () => {
@@ -29,7 +29,6 @@ export const getStaticProps: GetStaticProps<RandomQuoteProps> = async () => {
     minute: "numeric",
     second: "numeric",
   }).format(date);
-  console.log("generatedAt :>> ", typeof generatedAt);
 
   return {
     props: {
