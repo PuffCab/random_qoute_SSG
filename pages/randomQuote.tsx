@@ -1,6 +1,7 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import React from "react";
+import style from "@/styles/randomQuote.module.css";
 
 export interface QuoteType {
   _id: string;
@@ -15,36 +16,47 @@ export interface QuoteType {
 
 interface RandomQuoteProps {
   quote: QuoteType[];
+  generatedAtt: string;
 }
 
 export const getStaticProps: GetStaticProps<RandomQuoteProps> = async () => {
   const response = await fetch("https://api.quotable.io/quotes/random");
   const result: QuoteType[] = await response.json();
   console.log("result :>> ", result);
+  const date = new Date();
+  const generatedAt = new Intl.DateTimeFormat("default", {
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  }).format(date);
+  console.log("generatedAt :>> ", typeof generatedAt);
 
   return {
     props: {
       quote: result,
+      generatedAt: generatedAt,
     },
     revalidate: 60 * 5, // revalidate every 5 minutes
   };
 };
 
-export default function RandomQuote({ quote }: RandomQuoteProps) {
+export default function RandomQuote({ quote, generatedAt }: RandomQuoteProps) {
   console.log("quote :>> ", quote);
   return (
     <>
       <Head>
         <title key="title">SSG - random quote</title>
       </Head>
-      <div>
-        <h2>Random Quote of the day</h2>
-        <div>
-          <h3>{quote[0].content}</h3>
-          <ul>From: {quote[0].author}</ul>
+      <div className={style.container}>
+        <h2 className={style.title}>Random Quote of the day</h2>
+
+        <text className={style.quote}>{quote[0].content}</text>
+        <text className={style.author}> From: {quote[0].author}</text>
+        <div className={style.generatedAt}>
+          Generated at <span className="date">{generatedAt}</span>
         </div>
 
-        <p>Refresh to get a new one</p>
+        <button className={style.refresh}>Refresh to get a new one</button>
       </div>
     </>
   );
